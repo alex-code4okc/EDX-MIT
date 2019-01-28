@@ -1,0 +1,49 @@
+the room object:
+
+a grid starting at 0,0 and encompassing a rectangle of w,h
+
+movement can be in float but only “tiles” are cleaned. tiles are based on integer coordinates.
+
+for example corners (0,0),(0,1),(1,0),(1,1) denote the first tile. a 
+
+position anywhere inside 0<x<=1 and 0<y<=1 would be considered as having cleaned tile 1.
+
+how to represent the tiles? as a list of tuples? the tuples correspond to the upper right corner?
+
+tuples cannot be modified however
+
+n = width * height
+
+[ [x1,x2,y1,y2], [x1,x2,y1,y2], …, n-1]
+
+[ [(0,0),(1,1)], 
+
+the method works, but how to denote a tile is clean? could append true to both corners, although a bit cumbersome
+
+something like
+
+tiles[0].append(True)?
+
+and I have tiles 0 to n-1, how do can I tell which tiles belong where?
+
+might be better to have a 2d array
+
+tiles[][] ? technically no. I can use the current scheme and just focus on one corner, thus cutting in half the search space. use both corners to to determine which tile I’m in and then use only one corner to update wether cleaned or not?
+
+for example position (1.5,2.5) which tile is this? well x is between 1 and 2
+while y is between 2 and 3 so on the lower end we have corner (1,2) and upper end we have corner (2,3) and that tile is 7 on my grid, which could have been found by multiplying the upper end and adding 1? uy*ly+1?
+
+lets see if thats true:
+ex: position (.5,3.5) which means x is between 0 and 1 and y is between 3 and 4
+and this tile is (0,3) and (1,4) it is tile 4 in my scheme where the outer loop is x and the inner loop is y 
+
+all this can be solved by asking for the index of tiles using tile_index = tiles.index( math.floor(points),math.floor(pointy),math.ceil(pointx),math.ceil(pointy) then do operations on the index, tiles[index][2] = True but they must all be initialized to false otherwise there won’t be a value at index [index][2]
+
+#robot class
+
+there are three classes Position(x,y), RectangularRoom(width,height), Robot(room,speed)
+
+robot has the following attributes:
+position, room, and speed,direction
+
+a robot is given initially a room and a speed. got to move robot to a new position and figure out if that position is available in the room, if not, keep choosing until one is.?
